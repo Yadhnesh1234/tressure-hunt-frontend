@@ -1,69 +1,25 @@
-// Home.js
-import React, { useEffect,useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../utility/action/userAction";
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from "react-router-dom";
-
-// Validation schema
-const validationSchema = Yup.object({
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  password: Yup.string().required('Password is required'),
-});
+import Login from '../../components/login'
+import { useState } from 'react';
+import HeroSection from '../../components/HeroSection';
 
 const Home = () => {
-
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  const navigate= useNavigate()
-  const isUserVerified = useRef(false)
-
-  useEffect(() => {
-    isUserVerified.current = user.verified
-    localStorage.setItem("email",user.email)
-  }, [user]);
-
-  const onSubmit = async (values, { setSubmitting }) => {
-    try {
-      Promise.resolve(dispatch(login(values)))
-      .then(()=>{
-        if(isUserVerified.current === true){
-          setSubmitting(false);
-          navigate("/instruction")
-        }
-      })
-    } catch (error) {
-      console.error("Error during form submission:", error);
-      setSubmitting(false);
-    }
-  };
-
+  const [displayLogin, setDisplayLogin] = useState(false);
   return (
-    <Formik
-      initialValues={user}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
-      <Form>
-        <div>
-          <label htmlFor="email">Username</label>
-          <Field type="text" id="email" name="email" />
-          <ErrorMessage name="email" component="div" />
-        </div>
+    <>
+    <div className="bg-[url('file:///home/yadhnesh/Downloads/12874597_9Z_2102.w026.n002.116B.p1.116.jpg')] bg-cover bg-norepeat bg-center  ">
+      <div className={`hero min-h-screen bg-slate-800  bg-opacity-60 `}>
+            {  
+            !displayLogin?  
+            <div className="w-full h-screen items-center justify-center flex flex-col">
+                <HeroSection/>
+                <button onClick={()=>{setDisplayLogin(true)}} className="px-8 py-3 mt-8 text-medium text-orange-700 font-bold text-2xl hover:bg-yellow-500 bg-yellow-400 rounded-xl">Login</button>
+            </div>  :
+            <Login/>
+            }
+      </div>
+    </div>
+  </>
+  )
+}
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <Field type="password" id="password" name="password" />
-          <ErrorMessage name="password" component="div" />
-        </div>
-
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </Form>
-    </Formik>
-  );
-};
-
-export default Home;
+export default Home
