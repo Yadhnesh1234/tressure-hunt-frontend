@@ -4,9 +4,10 @@ import HeroSection from '../../components/HeroSection';
 
 const Home = () => {
   const [displayLogin, setDisplayLogin] = useState(false);
+  
   return (
     <>
-    <div className="bg-[url('file:///home/yadhnesh/Downloads/12874597_9Z_2102.w026.n002.116B.p1.116.jpg')] bg-cover bg-norepeat bg-center  ">
+    <div className="bg-[url('file:///home/yadhnesh/A_Projects/Freelance/QuestionAnsSystem/tressure-hunt/public/background_dark.jpg')] bg-cover bg-norepeat bg-center  ">
       <div className={`hero min-h-screen bg-slate-800  bg-opacity-60 `}>
             {  
             !displayLogin?  

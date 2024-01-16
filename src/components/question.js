@@ -8,8 +8,9 @@ const Question = ({questionNo})=>{
 
     return(
         <>
-        <h3>Question No { questionNo+1 }</h3>
-        <p><b>{ test.questions[questionNo] }</b></p>
+        <div className="flex justify-start items-start">
+        <p className="text-white text-2xl"><b>{ questionNo+1 +".   "+test.questions[questionNo] }</b></p>
+        </div>
         </>
     )
 }

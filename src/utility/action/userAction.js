@@ -5,6 +5,7 @@ export const login = (user) => {
     try {
       const res = await fetch(LOGIN_VERIFY_USER);
       const data = await res.json();
+      console.log(data)
       dispatch({
         type: "LOGIN",
         token: "",
