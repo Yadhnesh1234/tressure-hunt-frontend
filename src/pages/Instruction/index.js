@@ -18,7 +18,7 @@ const Instruction = ()=>{
     },[])
 
     useEffect(()=>{
-        if(test.startTest)
+        if(localStorage.getItem("start_test"))
           navigate("/test")
     },[test.startTest,navigate])
 

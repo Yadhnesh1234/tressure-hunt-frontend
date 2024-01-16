@@ -2,19 +2,35 @@ import {LOGIN_VERIFY_USER} from '../api'
 
 export const login = (user) => {
   return async (dispatch) => {
+    console.log(user)
     try {
-      const res = await fetch(LOGIN_VERIFY_USER);
+      const res = await fetch(LOGIN_VERIFY_USER, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          emailId: user.email,
+          password:user.password
+        }),
+      });
       const data = await res.json();
-      console.log(data)
+      if(data.status==='fail'){
+        localStorage.clear()
+        dispatch({type:"DEFAULT"})
+        throw new Error(data.message)
+      }
+      else{
       dispatch({
         type: "LOGIN",
-        token: "",
-        username: data.email,
-        password: data.password,
+        token: data.token,
+        username: user.email,
+        password: user.password,
         verified:true
       });
+    }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      alert(error.message)
     }
   };
 };

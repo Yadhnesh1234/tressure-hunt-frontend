@@ -1,15 +1,12 @@
-import { useSelector } from "react-redux"
 import React from 'react';
 
 
-const Question = ({questionNo})=>{
-   
-    const test = useSelector((state)=>state.test)
+const Question = ({question,questionNo})=>{
 
     return(
         <>
         <div className="flex justify-start items-start">
-        <p className="text-white text-2xl"><b>{ questionNo+1 +".   "+test.questions[questionNo] }</b></p>
+        <p className="text-white text-2xl"><b>{ questionNo +".   "+question }</b></p>
         </div>
         </>
     )

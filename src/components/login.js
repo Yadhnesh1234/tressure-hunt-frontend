@@ -20,7 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     isUserVerified.current = user.verified
-    localStorage.setItem("email", user.email)
+    localStorage.setItem("token", user.token)
   }, [user]);
 
   const onSubmit = async (values, { setSubmitting }) => {

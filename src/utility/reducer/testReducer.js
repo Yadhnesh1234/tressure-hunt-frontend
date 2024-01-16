@@ -1,6 +1,6 @@
 const initialState = {
     startTest:false,
-    questions:[],
+    question:[],
     questionNo:0
 }
 
@@ -12,17 +12,18 @@ const testReducer = (state=initialState,action)=>{
         return{
             ...state,
             startTest:action.startTest,
-            questions:action.questions,
-            questionNo:0
+            question:action.question,
+            questionNo:action.question_no
         }
      case "NEXT_QUESTION" :
         return{
            ...state,
-           questionNo:state.questionNo+1
-        } 
+           question:action.question,
+           questionNo:action.question_no
+         } 
      case "END_TEST" :
         return{
-            ...initialState
+           ...initialState
         }
      default:
         return{

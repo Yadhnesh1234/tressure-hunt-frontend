@@ -2,7 +2,8 @@ const initialState={
     token:"",
     email:"",
     password:"",
-    verified:false
+    verified:false,
+    error:""
 }
 
 const userReducer = (state=initialState,action) =>{
@@ -19,6 +20,15 @@ const userReducer = (state=initialState,action) =>{
         return{
             ...initialState
         }
+      case "DEFAULT":
+        return{
+           ...initialState
+      }
+      case "ERROR":
+         return{
+           ...state,
+           error:action.response
+         }
       default:
         return{
             ...state
