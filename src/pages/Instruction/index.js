@@ -34,7 +34,12 @@ const Instruction = ()=>{
 
     return(
         <>
-        <div className="bg-[url('file:///home/yadhnesh/A_Projects/Freelance/QuestionAnsSystem/tressure-hunt/public/background_dark.jpg')] bg-cover bg-norepeat bg-center  ">
+        <div style={{
+              backgroundImage: `url(${process.env.PUBLIC_URL}/background_dark.jpg)`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+      }}>
         <div className={`hero min-h-screen bg-slate-800  bg-opacity-60 `}>
         <div className="w-screen  flex justify-center items-center min-h-[80vh] ">
         <div className="box w-10/12 md:w-5/12 flex items-center justify-center  px-12 py-4 rounded-2xl  d-flex flex-col shadow-[0px_10px_53px_8px_#ffbe2d] bg-slate-950/50 ">

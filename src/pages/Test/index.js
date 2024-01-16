@@ -54,7 +54,12 @@ const Test = ()=>{
     <>
  
 
-    <div className="bg-[url('file:///home/yadhnesh/A_Projects/Freelance/QuestionAnsSystem/tressure-hunt/public/background_test.jpg')] bg-cover bg-norepeat bg-center  ">
+    <div style={{
+              backgroundImage: `url(${process.env.PUBLIC_URL}/background_test.jpg)`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+      }}>
     <div className={`hero min-h-screen bg-slate-800  bg-opacity-60 w-4xl h-4xl`}>
     <div className="w-screen  flex justify-center items-center min-h-[80vh] ">
         <div className="box w-10/12 md:w-5/12 flex items-center justify-center  px-12 py-6 rounded-2xl  d-flex flex-col shadow-[0px_10px_53px_8px_#87CEEB] bg-slate-950/50 ">

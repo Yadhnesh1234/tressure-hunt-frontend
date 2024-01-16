@@ -4,10 +4,15 @@ import HeroSection from '../../components/HeroSection';
 
 const Home = () => {
   const [displayLogin, setDisplayLogin] = useState(false);
-  
   return (
     <>
-    <div className="bg-[url('file:///home/yadhnesh/A_Projects/Freelance/QuestionAnsSystem/tressure-hunt/public/background_dark.jpg')] bg-cover bg-norepeat bg-center  ">
+    <div 
+      style={{
+              backgroundImage: `url(${process.env.PUBLIC_URL}/background_dark.jpg)`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+      }}>
       <div className={`hero min-h-screen bg-slate-800  bg-opacity-60 `}>
             {  
             !displayLogin?  
