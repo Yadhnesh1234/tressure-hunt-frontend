@@ -17,38 +17,39 @@ const validationSchema = Yup.object().shape({
 const Test = ()=>{
 
     const [prompt,setPrompt] = useState(false)
+    const [btn,setBtn] = useState(false)
     const test = useSelector((state)=>state.test)
     const [load,setLoad]=useState(true)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-
+    
     useEffect(()=>{
-        if(!localStorage.getItem("start_test")){
-          localStorage.clear()
-          dispatch(logout())
-          navigate("/")
-        }else{
-          Promise.resolve(dispatch(nextQuestion()))
-          .then(()=>{
-             setLoad(false) 
-          })
-        }
-    },[test.startTest,navigate,dispatch])
-
+      Promise.resolve(dispatch(nextQuestion()))
+      .then(()=>{
+         setLoad(false) 
+      })
+    },[dispatch])
 
     const handleSubmit= async (values,{resetForm})=>{
+       if(btn){
         console.log(values)
         dispatch(verifyAnswer(values.answer,test.questionNo)) 
         resetForm()
+       }
     }
-
     const dismiss_alert=()=>{
       setPrompt(false)
     }
 
     const end_test=()=>{
-      dispatch(endTest(test.questionNo,""))
+      console.log(test.questionNo)
+      Promise.resolve(dispatch(endTest(test.questionNo,"")))
+      .then(()=>{
+          localStorage.clear()
+          dispatch(logout())
+          navigate("/")
+      })
     }
     
     if(load){
@@ -83,14 +84,16 @@ const Test = ()=>{
         />
         <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="answer" component="div" className="error" />
         <div className="flex justify-between">
-        <button onClick={()=>{setPrompt(true)}} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none ">Submit</button>
-        <button type="Submit"  disabled={
+        <button onClick={()=>{
+            setPrompt(true)
+            setBtn(false)
+        }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none ">Submit</button>
+        <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
           true ? false : true
         } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${true?"bg-yellow-500":"bg-gray-300"} outline-none `}>Next</button>
         </div>
       </Form>
     </Formik>
-
       </div>
       </div>
       {prompt && (

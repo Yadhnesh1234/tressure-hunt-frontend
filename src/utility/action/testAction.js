@@ -26,6 +26,7 @@ export const nextQuestion=()=>{
             }
          });
          const data = await res.json();
+         console.log(data)
          if(!data)
            throw new Error(data.message)
          dispatch({
@@ -64,7 +65,7 @@ export const verifyAnswer=(answer,quesNo)=>{
    }
 }
 
-export const endTest=(quesNo,answer)=>{
+export const endTest=(quesNo,ans)=>{
    return async (dispatch)=>{
       try{
          const res = await fetch(END_TEST,{
@@ -75,7 +76,7 @@ export const endTest=(quesNo,answer)=>{
             },
             body:JSON.stringify({
                questionId: quesNo,
-               answer:answer
+               answer:ans
             })
          });
          const data = await res.json();

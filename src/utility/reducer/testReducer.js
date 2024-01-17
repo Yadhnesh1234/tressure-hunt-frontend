@@ -1,6 +1,6 @@
 const initialState = {
     startTest:false,
-    question:[],
+    question:"",
     questionNo:0
 }
 
