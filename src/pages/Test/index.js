@@ -8,34 +8,44 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Alert from "../../components/alert"
 
-
 const validationSchema = Yup.object().shape({
     answer: Yup.string().required('Answer is required'),
-  });
-  
-
+});
+ 
 const Test = ()=>{
 
     const [prompt,setPrompt] = useState(false)
     const [btn,setBtn] = useState(false)
-    const test = useSelector((state)=>state.test)
+    const [ans,setAns] = useState("")
     const [load,setLoad]=useState(true)
+    const [loadNext,setLoadNext]=useState(false)
+    const test = useSelector((state)=>state.test)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     
     useEffect(()=>{
+      setLoadNext(true)
       Promise.resolve(dispatch(nextQuestion()))
       .then(()=>{
          setLoad(false) 
+         setLoadNext(false)
       })
     },[dispatch])
 
     const handleSubmit= async (values,{resetForm})=>{
        if(btn){
-        console.log(values)
-        dispatch(verifyAnswer(values.answer,test.questionNo)) 
-        resetForm()
+        setLoadNext(true)
+        Promise.resolve(dispatch(verifyAnswer(values.answer,test.questionNo)))
+        .then(()=>{
+          Promise.resolve(dispatch(nextQuestion()))
+          .then(()=>{
+            resetForm()
+            setLoadNext(false)
+          })
+        })
+       }else{
+          setAns(values.answer)
        }
     }
     const dismiss_alert=()=>{
@@ -43,8 +53,7 @@ const Test = ()=>{
     }
 
     const end_test=()=>{
-      console.log(test.questionNo)
-      Promise.resolve(dispatch(endTest(test.questionNo,"")))
+      Promise.resolve(dispatch(endTest(test.questionNo,ans)))
       .then(()=>{
           localStorage.clear()
           dispatch(logout())
@@ -89,8 +98,8 @@ const Test = ()=>{
             setBtn(false)
         }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none ">Submit</button>
         <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
-          true ? false : true
-        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${true?"bg-yellow-500":"bg-gray-300"} outline-none `}>Next</button>
+          test.questionNo===15 ? true : false
+        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${(test.questionNo===15 || loadNext)?"bg-gray-300":"bg-yellow-500"} outline-none `}>Next</button>
         </div>
       </Form>
     </Formik>

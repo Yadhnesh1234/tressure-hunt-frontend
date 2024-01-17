@@ -1,4 +1,5 @@
 import {GET_NEXT_QUESTION,VERIFY_ANSWER,END_TEST} from "../api"
+
 export const startTest=()=>{
     return async (dispatch)=>{
         try{
@@ -55,9 +56,8 @@ export const verifyAnswer=(answer,quesNo)=>{
             })
          });
          const data = await res.json();
-         console.log(data)
          if(data.data.answerCorrect){
-            dispatch(nextQuestion())
+            alert("You Got The Answer!!!")
          }else  throw new Error("Wrong Answer !!! You didn't got a answer")
       }catch(error){
           alert(error.message)

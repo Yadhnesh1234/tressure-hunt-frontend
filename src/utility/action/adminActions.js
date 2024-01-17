@@ -1,16 +1,16 @@
-import {LOGIN_VERIFY_USER} from '../api'
+import {ADMIN_LOGIN} from '../api'
 
-export const login = (user) => {
+export const login = (username,password) => {
   return async (dispatch) => {
     try {
-      const res = await fetch(LOGIN_VERIFY_USER, {
+      const res = await fetch(ADMIN_LOGIN, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          emailId: user.email,
-          password:user.password
+          username: username,
+          password:password
         }),
       });
       const data = await res.json();
@@ -20,11 +20,12 @@ export const login = (user) => {
         throw new Error(data.message)
       }
       else{
+      alert("Login Successfull")
       dispatch({
         type: "LOGIN",
         token: data.token,
-        username: user.email,
-        password: user.password,
+        username: username,
+        password: password,
         verified:true
       });
     }

@@ -1,26 +1,26 @@
-import { useState,useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
-import {useSelector,useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import { startTest } from "../../utility/action/testAction"
 import Alert from "../../components/alert"
 
 const Instruction = ()=>{
    
-    const [userName,setUserName] = useState(null)
+    // const [userName,setUserName] = useState(null)
     const [prompt,setPrompt] = useState(false)
 
-    const test = useSelector((state)=>state.test)
+    // const test = useSelector((state)=>state.test)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        setUserName(localStorage.getItem("email")) 
-    },[])
+    // useEffect(()=>{
+    //     setUserName(localStorage.getItem("email")) 
+    // },[])
 
-    useEffect(()=>{
-        if(localStorage.getItem("start_test"))
-          navigate("/test")
-    },[test.startTest,navigate])
+    // useEffect(()=>{
+    //     if(localStorage.getItem("start_test"))
+    //       navigate("/test")
+    // },[test.startTest,navigate])
 
 
     const dismiss_alert=()=>{
@@ -28,8 +28,10 @@ const Instruction = ()=>{
     }
 
     const start_test=()=>{
-        console.log(userName)
-        dispatch(startTest()) 
+        Promise.resolve(dispatch(startTest()))
+        .then(()=>{
+            navigate("/test")
+        })
     }
 
     return(

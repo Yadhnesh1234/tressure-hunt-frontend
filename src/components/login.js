@@ -45,7 +45,7 @@ const Login = () => {
   >
   <Form>
     <div className="w-screen  flex justify-center items-center min-h-[80vh] ">
-        <div className="box w-10/12 md:w-5/12 flex items-center justify-center  px-12 py-4 rounded-2xl  d-flex flex-col shadow-[0px_10px_53px_8px_#ffbe2d] bg-slate-950/50 ">
+        <div className="box w-10/12 md:w-3/12 flex items-center justify-center  px-12 py-4 rounded-2xl  d-flex flex-col shadow-[0px_2px_50px_4px_#de9f14] bg-slate-950/50 ">
           <h3 className="text-3xl font-bold  text-center text-white">Login</h3>
             <p className="text-md text-white text-center mt-4">Please enter your login</p>
             {/* formik */}
