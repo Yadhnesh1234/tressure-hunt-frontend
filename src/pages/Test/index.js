@@ -85,7 +85,7 @@ const Test = ()=>{
         <div className="flex justify-between">
         <button onClick={()=>{setPrompt(true)}} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none ">Submit</button>
         <button type="Submit"  disabled={
-          true ?false:true
+          true ? false : true
         } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${true?"bg-yellow-500":"bg-gray-300"} outline-none `}>Next</button>
         </div>
       </Form>
@@ -95,7 +95,7 @@ const Test = ()=>{
       </div>
       {prompt && (
        <Alert message={"Are you sure you want to submit the test"} successFunc={end_test} dismissFunc={dismiss_alert}/>         
-        )}
+      )}
       </div>
     </div>
 

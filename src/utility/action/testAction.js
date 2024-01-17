@@ -79,11 +79,11 @@ export const endTest=(quesNo,answer)=>{
             })
          });
          const data = await res.json();
-         localStorage.setItem("start_test",false)
          dispatch({
             type:"END_TEST",
          })
          alert(data.message)
+         localStorage.setItem("start_test",false)
       }catch(error){
          console.error("Error fetching user data:", error);
       }
