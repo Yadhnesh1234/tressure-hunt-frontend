@@ -8,6 +8,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Alert from "../../components/alert"
 import Loader from "../../components/loader"
+import CircularProgress from '@mui/material/CircularProgress';
 
 const validationSchema = Yup.object().shape({
     answer: Yup.string().required('Answer is required'),
@@ -74,7 +75,7 @@ const Test = ()=>{
               backgroundPosition: 'center',
       }}>
     <div className={`hero min-h-screen bg-slate-800  bg-opacity-60 w-4xl h-4xl`}>
-    <div className="w-screen  flex justify-center items-center min-h-[80vh] ">
+    <div className="w-screen  flex justify-center items-center min-h-[100vh] ">
         <div className="box w-10/12 md:w-5/12 flex items-center justify-center  px-12 py-6 rounded-2xl  d-flex flex-col shadow-[0px_10px_53px_8px_#87CEEB] bg-slate-950/50 ">
     <Question question={test.question} questionNo={test.questionNo}/>
     <Formik
@@ -97,6 +98,7 @@ const Test = ()=>{
             setPrompt(true)
             setBtn(false)
         }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none ">Submit</button>
+        {loadNext?<CircularProgress/>:""}
         <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
           test.questionNo===15 ? true : false
         } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${(test.questionNo===15 || loadNext)?"bg-gray-300":"bg-yellow-500"} outline-none `}>Next</button>
