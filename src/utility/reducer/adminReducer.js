@@ -3,7 +3,8 @@ const initialState={
     email:"",
     password:"",
     verified:false,
-    error:""
+    error:"",
+    reg_users:[]
 }
 
 const adminReducer = (state=initialState,action) =>{
@@ -15,6 +16,11 @@ const adminReducer = (state=initialState,action) =>{
             email:action.username,
             password:action.password,
             verified:action.verified
+        }
+      case "GET_USERS":
+        return{
+          ...state,
+          reg_users:action.users
         }
       case "LOGOUT":
         return{

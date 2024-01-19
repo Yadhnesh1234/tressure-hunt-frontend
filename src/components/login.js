@@ -48,7 +48,6 @@ const Login = () => {
         <div className="box w-10/12 md:w-3/12 flex items-center justify-center  px-12 py-4 rounded-2xl  d-flex flex-col shadow-[0px_2px_50px_4px_#de9f14] bg-slate-950/50 ">
           <h3 className="text-3xl font-bold  text-center text-white">Login</h3>
             <p className="text-md text-white text-center mt-4">Please enter your login</p>
-            {/* formik */}
             <div className="form-login px-6 py-3">
                 <div className="mb-3">
                   <label htmlFor="email" className="text-slate-100 font-semibold">Email</label>

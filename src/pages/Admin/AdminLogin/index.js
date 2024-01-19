@@ -17,7 +17,6 @@ export default function AdminLogin(){
 
   useEffect(() => {
     isUserVerified.current = admin.verified
-    localStorage.setItem("admin_token", admin.token)
   }, [admin]);
 
   const handleUsernameChange = (e) => {
@@ -34,7 +33,7 @@ export default function AdminLogin(){
       Promise.resolve(dispatch(login(username,password)))
         .then(() => {
           if (isUserVerified.current === true) {
-            navigate("/")
+            navigate("/dashboard")
           }
         })
     } catch (error) {

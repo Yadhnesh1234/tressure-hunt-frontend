@@ -21,6 +21,7 @@ export const login = (username,password) => {
       }
       else{
       alert("Login Successfull")
+      localStorage.setItem("admin_token", data.token)
       dispatch({
         type: "LOGIN",
         token: data.token,
@@ -35,7 +36,27 @@ export const login = (username,password) => {
   };
 };
 
-
+export const getAllUsers=()=>{
+  return async (dispatch) => {
+  try {
+    const res = await fetch("https://treasure-hunt-test-conductor-backend.vercel.app/api/v1/admin/getResults", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer "+localStorage.getItem("admin_token")
+      }
+    });
+    const data = await res.json()
+    console.log(data)
+    dispatch({
+      type: "GET_USERS",
+      users:data.data
+    });
+  } catch (error) {
+    alert(error.message)
+  }
+ }
+}
 export const logout = () =>{
     return{ type:"LOGOUT"  }
 }
