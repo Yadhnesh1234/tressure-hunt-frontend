@@ -7,6 +7,7 @@ import Question from "../../components/question"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Alert from "../../components/alert"
+import Loader from "../../components/loader"
 
 const validationSchema = Yup.object().shape({
     answer: Yup.string().required('Answer is required'),
@@ -62,8 +63,7 @@ const Test = ()=>{
     }
     
     if(load){
-      console.log("loading")
-      return
+      return  <Loader/>
     }
     return(
     <>
@@ -92,7 +92,7 @@ const Test = ()=>{
           className="text-white py-2 px-3 mt-4 rounded-xl w-full border focus:border-yellow-300 bg-slate-950/50 border-blue-600 border-1 outline-none "
         />
         <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="answer" component="div" className="error" />
-        <div className="flex justify-between">
+        <div className="flex justify-between h-50">
         <button onClick={()=>{
             setPrompt(true)
             setBtn(false)
