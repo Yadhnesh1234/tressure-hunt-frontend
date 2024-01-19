@@ -59,7 +59,7 @@ export default function LeaderBoard() {
     <div className={`hero min-h-screen bg-slate-800  bg-opacity-60 `}>
       <div className="w-full h-screen items-center justify-center flex flex-col">
       <h2 className='text-5xl text-amber-500 hero-heading'>Leaderboard</h2>
-      <div style={{ height: '70%', width: '70%' }} className="mt-12 text-3xl font-bold text-center text-white box w-10/12 md:w-3/12 flex items-center justify-center px-12 py-4 rounded-2xl d-flex flex-col shadow-[0px_2px_50px_4px_#de9f14] bg-slate-950/50">
+      <div style={{ marginTop: '20px', color: 'white', border: 'none', width: '70%' }} className="mt-12 text-3xl font-bold text-center text-white box w-10/12 md:w-3/12 flex items-center justify-center px-12 py-4 rounded-2xl d-flex flex-col shadow-[0px_2px_50px_4px_#de9f14] bg-slate-950/50">
       <DataGrid
         rows={admin.reg_users}
         columns={columns}
