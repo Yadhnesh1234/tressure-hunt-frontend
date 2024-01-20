@@ -92,7 +92,9 @@ const Test = ()=>{
           placeholder="Enter your answer"
           className="text-white py-2 px-3 mt-4 rounded-xl w-full border focus:border-yellow-300 bg-slate-950/50 border-blue-600 border-1 outline-none "
         />
+        <div className="h-7 p-1">
         <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="answer" component="div" className="error" />
+        </div>
         <div className="flex justify-between h-50">
         <button onClick={()=>{
             setPrompt(true)
