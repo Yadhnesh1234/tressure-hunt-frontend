@@ -4,6 +4,8 @@ import HeroSection from '../../components/HeroSection';
 
 const Home = () => {
   const [displayLogin, setDisplayLogin] = useState(false);
+  
+
   return (
     <>
     <div 

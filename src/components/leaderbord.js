@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../utility/action/adminActions";
 import CircularProgress from '@mui/material/CircularProgress';
 import { DataGrid } from '@mui/x-data-grid';
+import {useNavigate} from 'react-router-dom'
 import "./leaderboard.css"
 
 const columns = [
@@ -23,11 +24,17 @@ const columns = [
 
 export default function LeaderBoard() {
   const admin = useSelector((state) => state.admin);
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
     Promise.resolve(dispatch(getAllUsers()))
   }, [dispatch])
-
+  
+  useEffect(() => {
+    if(!admin.verified){
+      navigate("/admin-login")
+    }
+  }, [admin.verified,navigate]);
   useEffect(() => {
     console.log(admin.reg_users)
   }, [admin.reg_users])
@@ -51,7 +58,7 @@ export default function LeaderBoard() {
     <>
     <div 
     style={{
-            backgroundImage: `url(${process.env.PUBLIC_URL}/background_dark.jpg)`,
+            backgroundImage: `url(${process.env.PUBLIC_URL}/background_test.jpg)`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',

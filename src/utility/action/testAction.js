@@ -80,6 +80,7 @@ export const endTest=(quesNo,ans)=>{
             })
          });
          const data = await res.json();
+         console.log(data)
          dispatch({
             type:"END_TEST",
          })

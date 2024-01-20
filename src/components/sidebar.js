@@ -22,9 +22,10 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import QueueIcon from '@mui/icons-material/Queue';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { logout } from "../utility/action/adminActions";
-import {useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Table from './table'
+
 
 
 const drawerWidth = 240;
@@ -117,6 +118,13 @@ export default function Sidebar() {
   const navigate = useNavigate()
   const [menuIndex,setMenuIndex] = useState(0)
   const [open, setOpen] = React.useState(false);
+  const admin = useSelector((state) => state.admin);
+
+
+  useEffect(()=>{
+     if( !admin.verified )
+       navigate("/admin-login")
+  },[admin.verified,navigate])
 
   useEffect(()=>{
     if(menuIndex===4){
@@ -129,7 +137,8 @@ export default function Sidebar() {
   const getComponent =()=>{
     if(menuIndex === 0){
       return <Table/>
-    }
+    }else if(menuIndex === 1)
+    navigate("/leaderboard")
 }
   const handleDrawerOpen = () => {
     setOpen(true);

@@ -3,10 +3,12 @@ import { TEInput, TERipple } from "tw-elements-react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../utility/action/adminActions";
 import { useSelector, useDispatch } from "react-redux";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function AdminLogin(){
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [load,setLoad] = useState(false)
   const admin = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -29,9 +31,11 @@ export default function AdminLogin(){
   
   const onSubmit = async () => {
     try {
+      setLoad(true)
       console.log(username,password)
       Promise.resolve(dispatch(login(username,password)))
         .then(() => {
+          setLoad(false)
           if (isUserVerified.current === true) {
             navigate("/dashboard")
           }
@@ -91,13 +95,16 @@ export default function AdminLogin(){
               {/* <!-- Login button --> */}
               <div className="text-center lg:text-left">
                 <TERipple rippleColor="light">
-                  <button
+                { !load ?
+                 <button
                     onClick={onSubmit}
                     type="button"
                     className="inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                   >
-                    Login
-                  </button>
+                  Login
+                  </button>:
+                  <CircularProgress/>
+                }
                 </TERipple>
               </div>
             </form>

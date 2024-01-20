@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef ,useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import { login } from "../utility/action/userAction";
+import CircularProgress from '@mui/material/CircularProgress';
 
 // Validation schema
 const validationSchema = Yup.object({
@@ -16,6 +17,8 @@ const Login = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate()
+  const [load,setLoad]=useState(false)
+
   const isUserVerified = useRef(false)
 
   useEffect(() => {
@@ -25,8 +28,10 @@ const Login = () => {
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
+      setLoad(true)
       Promise.resolve(dispatch(login(values)))
         .then(() => {
+          setLoad(false)
           if (isUserVerified.current === true) {
             setSubmitting(false);
             navigate("/instruction")
@@ -52,19 +57,24 @@ const Login = () => {
                 <div className="mb-3">
                   <label htmlFor="email" className="text-slate-100 font-semibold">Email</label>
                   <Field  type="text" id="email" name="email" placeholder='yadhnesh@gmail.com' className="text-white py-2 px-3 mt-4 rounded-xl w-full border focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 outline-none " />
+                  <div className="h-7 p-1">
                   <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="email" component="div" />
+                  </div>
                 </div>
 
                 {/* Password */}
                 <div className="my-3">
                   <label htmlFor="password" className="text-slate-100 font-semibold">Password</label>
                   <Field type="password" id="password" name="password" placeholder='*********' className="text-white py-2 px-3 mt-4 rounded-xl w-full border focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 outline-none " />
+                  <div className="h-7 p-1">
                   <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="password" component="div" />
+                  </div>
                 </div>
-
+              {load?<div className="flex justify-center w-full py-5 mt-4"><CircularProgress/></div>:
                 <div className="my-4">
                 <input type="submit" className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-full border focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none " />
                 </div>
+              }
             </div>
         </div>
     </div>

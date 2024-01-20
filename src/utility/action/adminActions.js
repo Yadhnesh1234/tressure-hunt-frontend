@@ -22,6 +22,7 @@ export const login = (username,password) => {
       else{
       alert("Login Successfull")
       localStorage.setItem("admin_token", data.token)
+      localStorage.setItem("admin-verified",true)
       dispatch({
         type: "LOGIN",
         token: data.token,
@@ -58,5 +59,6 @@ export const getAllUsers=()=>{
  }
 }
 export const logout = () =>{
+    localStorage.clear();
     return{ type:"LOGOUT"  }
 }
