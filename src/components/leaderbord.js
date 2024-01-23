@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../utility/action/adminActions";
+import { getResult } from "../utility/action/adminActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -31,18 +31,18 @@ export default function LeaderBoard() {
   const admin = useSelector((state) => state.admin);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
-    Promise.resolve(dispatch(getAllUsers()));
+    Promise.resolve(dispatch(getResult()));
   }, [dispatch]);
 
   useEffect(() => {
-    if (!admin.verified) {
-      navigate("/admin-login");
-    }
-  }, [admin.verified, navigate]);
+    console.log(admin.rank_users);
+  }, [admin.rank_users]);
+
   useEffect(() => {
-    console.log(admin.reg_users);
-  }, [admin.reg_users]);
+    if (!admin.verified) navigate("/admin-login");
+  }, [admin.verified, navigate]);
 
   const getRowId = (row) => row.rank;
 
@@ -50,7 +50,7 @@ export default function LeaderBoard() {
     return params.rowIndex < 3 ? "top-row" : "";
   };
 
-  if (admin.reg_users.length === 0) {
+  if (admin.rank_users.length === 0) {
     return (
       <>
         <div className="flex justify-center">
@@ -84,7 +84,7 @@ export default function LeaderBoard() {
               className="mt-12 text-3xl font-bold text-center text-white box w-10/12 md:w-3/12 flex items-center justify-center px-12 py-4 rounded-2xl d-flex flex-col shadow-[0px_2px_50px_4px_#de9f14] bg-slate-950/50"
             >
               <DataGrid
-                rows={admin.reg_users}
+                rows={admin.rank_users}
                 columns={columns}
                 pageSize={10}
                 getRowId={getRowId}

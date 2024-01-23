@@ -4,7 +4,8 @@ const initialState={
     password:"",
     verified:false,
     error:"",
-    reg_users:[]
+    reg_users:[],
+    rank_users:[]
 }
 
 const adminReducer = (state=initialState,action) =>{
@@ -22,6 +23,11 @@ const adminReducer = (state=initialState,action) =>{
           ...state,
           reg_users:action.users
         }
+      case "GET_RANKS":
+         return{
+          ...state,
+          rank_users:action.result
+         }
       case "LOGOUT":
         return{
             ...initialState

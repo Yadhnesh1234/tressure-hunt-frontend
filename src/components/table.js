@@ -1,29 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../utility/action/adminActions";
+import { getAllUsers,resetUser } from "../utility/action/adminActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { DataGrid } from "@mui/x-data-grid";
-const columns = [
-  { field: "_id", headerName: "User Id", width: 250 },
-  { field: "rank", headerName: "Rank", width: 50 },
-  { field: "firstName", headerName: "First name", width: 150 },
-  { field: "lastName", headerName: "Last name", width: 150 },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 300,
-  },
-  {
-    field: "questionsSolved",
-    headerName: "Questions solved",
-    width: 150,
-  },
-  {
-    field: "testSubmissionTime",
-    headerName: "Submission time",
-    width: 150,
-  },
-];
+
 
 export default function Table() {
   const admin = useSelector((state) => state.admin);
@@ -36,6 +16,32 @@ export default function Table() {
     console.log(admin.reg_users);
   }, [admin.reg_users]);
 
+  const columns = [
+    { field: "_id", headerName: "User Id", width: 250 },
+    { field: "firstName", headerName: "First name", width: 150 },
+    { field: "lastName", headerName: "Last name", width: 150 },
+    {
+      field: "emailId",
+      headerName: "Email",
+      width: 300,
+    },
+    {
+      field:"reset",
+      headerName:"Reset",
+      with:150,
+      renderCell:(params)=>{
+        const onClickFunc=()=>{
+           dispatch(resetUser(params.id))
+        }
+        return(
+          <>
+          <button onClick={onClickFunc} style={{border:"2px solid red",borderRadius:"2px",background:"red"}}>Reset</button>
+          </>
+        )
+      }
+        
+    }
+  ];
   if (admin.reg_users.length === 0) {
     return (
       <>
@@ -53,8 +59,7 @@ export default function Table() {
           rows={admin.reg_users}
           columns={columns}
           pageSize={5}
-          checkboxSelection
-          getRowId={(row) => row.rank}
+          getRowId={(row) => row._id}
           style={{ marginTop: "20px" }}
         />
       </div>
