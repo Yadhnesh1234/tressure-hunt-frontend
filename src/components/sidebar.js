@@ -18,8 +18,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import QueueIcon from "@mui/icons-material/Queue";
+// import PersonAddIcon from "@mui/icons-material/PersonAdd";
+// import QueueIcon from "@mui/icons-material/Queue";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logout } from "../utility/action/adminActions";
 import { useSelector, useDispatch } from "react-redux";
@@ -98,10 +98,6 @@ const getIcon = (index) => {
   } else if (index === 1) {
     return <LeaderboardIcon />;
   } else if (index === 2) {
-    return <PersonAddIcon />;
-  } else if (index === 3) {
-    return <QueueIcon />;
-  } else {
     return <LogoutIcon />;
   }
 };
@@ -119,7 +115,7 @@ export default function Sidebar() {
   }, [admin.verified, navigate]);
 
   useEffect(() => {
-    if (menuIndex === 4) {
+    if (menuIndex === 2) {
       dispatch(logout());
       localStorage.clear();
       navigate("/admin-login");
