@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react"
+import { useEffect,useState,useRef } from "react"
 import { endTest,nextQuestion,verifyAnswer } from "../../utility/action/testAction"
 import { logout } from "../../utility/action/userAction"
 import { useSelector,useDispatch } from "react-redux"
@@ -22,6 +22,7 @@ const Test = ()=>{
     const [load,setLoad]=useState(true)
     const [loadNext,setLoadNext]=useState(false)
     const test = useSelector((state)=>state.test)
+    const verifyAnsStatus=useRef(test.ansVerifiedStatus)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -35,20 +36,33 @@ const Test = ()=>{
       })
     },[dispatch])
 
+    useEffect(()=>{
+      verifyAnsStatus.current=test.ansVerifiedStatus;
+      console.log(test.ansVerifiedStatus)
+    },[test])
+
+    const nextQuestionApiCall=(resetForm)=>{
+       Promise.resolve(dispatch(nextQuestion()))
+      .then(()=>{
+       resetForm()
+       setLoadNext(false)
+     })
+    }
+    
     const handleSubmit= async (values,{resetForm})=>{
-       if(btn){
+      if(btn){
         setLoadNext(true)
         Promise.resolve(dispatch(verifyAnswer(values.answer,test.questionNo)))
         .then(()=>{
-          Promise.resolve(dispatch(nextQuestion()))
-          .then(()=>{
-            resetForm()
-            setLoadNext(false)
-          })
-        })
-       }else{
+         if(verifyAnsStatus.current){
+          nextQuestionApiCall(resetForm)
+        }else{
+           setTimeout(nextQuestionApiCall(resetForm),5000)
+        }
+      })
+      }else{
           setAns(values.answer)
-       }
+      }
     }
     const dismiss_alert=()=>{
       setPrompt(false)
@@ -76,7 +90,7 @@ const Test = ()=>{
       }}>
     <div className={`hero min-h-screen bg-slate-800  bg-opacity-60 w-4xl h-4xl`}>
     <div className="w-screen  flex justify-center items-center min-h-[100vh] ">
-        <div className="box w-10/12 md:w-5/12 flex items-center justify-center  px-12 py-6 rounded-2xl  d-flex flex-col shadow-[0px_10px_53px_8px_#87CEEB] bg-slate-950/50 ">
+    <div className="box w-10/12 md:w-5/12 flex items-center justify-center  px-12 py-6 rounded-2xl  d-flex flex-col shadow-[0px_10px_53px_8px_#87CEEB] bg-slate-950/50 ">
     <Question question={test.question} questionNo={test.questionNo}/>
     <Formik
       initialValues={{ answer: '' }}
@@ -95,7 +109,7 @@ const Test = ()=>{
         <div className="h-7 p-1">
         <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="answer" component="div" className="error" />
         </div>
-        <div className="flex justify-between h-50">
+        <div className="flex justify-between h-50 items-center">
         <button onClick={()=>{
             setPrompt(true)
             setBtn(false)

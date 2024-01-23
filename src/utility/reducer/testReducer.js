@@ -1,7 +1,8 @@
 const initialState = {
     startTest:false,
     question:"",
-    questionNo:0
+    questionNo:0,
+    ansVerifiedStatus:false
 }
 
 
@@ -15,6 +16,11 @@ const testReducer = (state=initialState,action)=>{
             question:action.question,
             questionNo:action.question_no
         }
+     case "VERIFY_ANS":
+       return{
+         ...state,
+         ansVerifiedStatus:action.response
+       }
      case "NEXT_QUESTION" :
         return{
            ...state,
