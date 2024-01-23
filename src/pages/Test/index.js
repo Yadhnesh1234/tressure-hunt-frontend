@@ -29,6 +29,7 @@ const Test = ()=>{
     
     useEffect(()=>{
       setLoadNext(true)
+      console.log("Hello")
       Promise.resolve(dispatch(nextQuestion()))
       .then(()=>{
          setLoad(false) 
@@ -55,9 +56,16 @@ const Test = ()=>{
         Promise.resolve(dispatch(verifyAnswer(values.answer,test.questionNo)))
         .then(()=>{
          if(verifyAnsStatus.current){
+          alert("You Got The Answer!!!")
           nextQuestionApiCall(resetForm)
         }else{
-           setTimeout(nextQuestionApiCall(resetForm),5000)
+          setTimeout(()=>{
+            Promise.resolve(dispatch(nextQuestion()))
+            .then(()=>{
+             resetForm()
+             setLoadNext(false)
+           })
+           },20000)
         }
       })
       }else{

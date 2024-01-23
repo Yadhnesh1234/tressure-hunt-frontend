@@ -57,17 +57,16 @@ export const verifyAnswer=(answer,quesNo)=>{
          });
          const data = await res.json();
          if(data.data.answerCorrect){
-            // alert("You Got The Answer!!!")
             dispatch({
                type:"VERIFY_ANS",
                response:true
             })
          }else{
-            // throw new Error("Wrong Answer !!! You didn't got a answer")
             dispatch({
                type:"VERIFY_ANS",
                response:false
             })
+            throw new Error("Wrong Answer !!! wait for 20 sec")
          } 
       }catch(error){
           alert(error.message)
