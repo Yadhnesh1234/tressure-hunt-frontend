@@ -4,7 +4,8 @@ import { getAllUsers } from "../utility/action/adminActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { DataGrid } from "@mui/x-data-grid";
 const columns = [
-  { field: "rank", headerName: "ID", width: 50 },
+  { field: "_id", headerName: "User Id", width: 250 },
+  { field: "rank", headerName: "Rank", width: 50 },
   { field: "firstName", headerName: "First name", width: 150 },
   { field: "lastName", headerName: "Last name", width: 150 },
   {
@@ -15,6 +16,11 @@ const columns = [
   {
     field: "questionsSolved",
     headerName: "Questions solved",
+    width: 150,
+  },
+  {
+    field: "testSubmissionTime",
+    headerName: "Submission time",
     width: 150,
   },
 ];
