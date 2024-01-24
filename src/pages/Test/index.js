@@ -22,7 +22,6 @@ const Test = ()=>{
     const [load,setLoad]=useState(true)
     const [loadNext,setLoadNext]=useState(false)
     const [wrongAns,setWrongAns]=useState(false)
-    const [timer,setTimer]=useState(20)
     const test = useSelector((state)=>state.test)
     const verifyAnsStatus=useRef(test.ansVerifiedStatus)
     const dispatch = useDispatch()
