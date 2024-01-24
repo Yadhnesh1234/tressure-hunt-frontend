@@ -2,7 +2,8 @@ const initialState = {
     startTest:false,
     question:"",
     questionNo:0,
-    ansVerifiedStatus:false
+    ansVerifiedStatus:false,
+    totalQuestions:0
 }
 
 
@@ -30,6 +31,11 @@ const testReducer = (state=initialState,action)=>{
      case "END_TEST" :
         return{
            ...initialState
+        }
+     case "TOTAL_COUNT":
+        return{
+         ...state,
+         totalQuestions:action.response
         }
      default:
         return{

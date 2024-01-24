@@ -1,4 +1,4 @@
-import {GET_NEXT_QUESTION,VERIFY_ANSWER,END_TEST} from "../api"
+import {GET_NEXT_QUESTION,VERIFY_ANSWER,END_TEST,GET_ALL_QUESTION} from "../api"
 
 export const startTest=()=>{
     return async (dispatch)=>{
@@ -12,6 +12,22 @@ export const startTest=()=>{
             })
         }catch(error){
            alert(error.message)
+        }
+    }
+}
+
+export const getAllQuestionCount=()=>{
+    return async (dispatch)=>{
+        try{
+           const res= await fetch(GET_ALL_QUESTION)
+           const data = await res.json();
+           console.log(data)
+           dispatch({
+              type:"TOTAL_COUNT",
+               response:data.totalQuestionCount
+           })
+        }catch(error){
+             alert(error.message)
         }
     }
 }

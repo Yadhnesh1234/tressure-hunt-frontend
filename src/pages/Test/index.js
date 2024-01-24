@@ -1,5 +1,5 @@
 import { useEffect,useState,useRef } from "react"
-import { endTest,nextQuestion,verifyAnswer } from "../../utility/action/testAction"
+import { endTest,nextQuestion,verifyAnswer,getAllQuestionCount } from "../../utility/action/testAction"
 import { logout } from "../../utility/action/userAction"
 import { useSelector,useDispatch } from "react-redux"
 import {useNavigate} from 'react-router-dom'
@@ -30,6 +30,7 @@ const Test = ()=>{
     useEffect(()=>{
       setLoadNext(true)
       console.log("Hello")
+      Promise.resolve(dispatch(getAllQuestionCount()))
       Promise.resolve(dispatch(nextQuestion()))
       .then(()=>{
          setLoad(false) 
@@ -124,8 +125,8 @@ const Test = ()=>{
         }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none ">Submit</button>
         {loadNext?<CircularProgress/>:""}
         <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
-          test.questionNo===15 ? true : false
-        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${(test.questionNo===15 || loadNext)?"bg-gray-300":"bg-yellow-500"} outline-none `}>Next</button>
+          test.questionNo===test.totalQuestions ? true : false
+        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${(test.questionNo===test.totalQuestions || loadNext)?"bg-gray-300":"bg-yellow-500"} outline-none `}>Next</button>
         </div>
       </Form>
     </Formik>
