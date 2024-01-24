@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers,resetUser } from "../utility/action/adminActions";
+import { getAllUsers, resetUser } from "../utility/action/adminActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { DataGrid } from "@mui/x-data-grid";
-
 
 export default function Table() {
   const admin = useSelector((state) => state.admin);
@@ -26,21 +25,37 @@ export default function Table() {
       width: 300,
     },
     {
-      field:"reset",
-      headerName:"Reset",
-      with:150,
-      renderCell:(params)=>{
-        const onClickFunc=()=>{
-           dispatch(resetUser(params.id))
-        }
-        return(
+      field: "reset",
+      headerName: "Reset",
+      with: 150,
+      renderCell: (params) => {
+        const onClickFunc = () => {
+          if (
+            !window.confirm(
+              "Are you sure you want to reset the data?This will permenantly reset the test history!"
+            )
+          ) {
+            return;
+          }
+          dispatch(resetUser(params.id));
+        };
+        return (
           <>
-          <button onClick={onClickFunc} style={{border:"2px solid red",borderRadius:"2px",background:"red"}}>Reset</button>
+            <button
+              onClick={onClickFunc}
+              style={{
+                padding: "0.5rem 1rem",
+                color: "white",
+                borderRadius: "0.5rem",
+                background: "#3b71ca",
+              }}
+            >
+              Reset
+            </button>
           </>
-        )
-      }
-        
-    }
+        );
+      },
+    },
   ];
   if (admin.reg_users.length === 0) {
     return (
