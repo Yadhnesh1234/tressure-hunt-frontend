@@ -22,6 +22,7 @@ const Test = ()=>{
     const [load,setLoad]=useState(true)
     const [loadNext,setLoadNext]=useState(false)
     const [wrongAns,setWrongAns]=useState(false)
+    const [timer,setTimer]=useState(20)
     const test = useSelector((state)=>state.test)
     const verifyAnsStatus=useRef(test.ansVerifiedStatus)
     const dispatch = useDispatch()
@@ -128,7 +129,7 @@ const Test = ()=>{
         }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none ">Submit</button>
         {loadNext?<CircularProgress/>:""}
         <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
-          test.questionNo===test.totalQuestions ? true : false
+          test.questionNo===test.totalQuestions || loadNext || wrongAns ? true : false
         } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${(test.questionNo===test.totalQuestions || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>Next</button>
         </div>
       </Form>
