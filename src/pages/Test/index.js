@@ -22,6 +22,7 @@ const Test = ()=>{
     const [load,setLoad]=useState(true)
     const [loadNext,setLoadNext]=useState(false)
     const [wrongAns,setWrongAns]=useState(false)
+    const [successMsg,setSuccess]=useState(false)
     const test = useSelector((state)=>state.test)
     const verifyAnsStatus=useRef(test.ansVerifiedStatus)
     const dispatch = useDispatch()
@@ -41,7 +42,6 @@ const Test = ()=>{
 
     useEffect(()=>{
       verifyAnsStatus.current=test.ansVerifiedStatus;
-      console.log(test.ansVerifiedStatus)
     },[test])
 
     const nextQuestionApiCall=(resetForm)=>{
@@ -58,7 +58,7 @@ const Test = ()=>{
         Promise.resolve(dispatch(verifyAnswer(values.answer,test.questionNo)))
         .then(()=>{
          if(verifyAnsStatus.current){
-          alert("You Got The Answer!!!")
+          setSuccess(true)
           nextQuestionApiCall(resetForm)
         }else{
           setLoadNext(false)
@@ -121,22 +121,29 @@ const Test = ()=>{
         <div className="h-7 p-1">
         <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="answer" component="div" className="error" />
         </div>
-        <div className="flex justify-between h-50 items-center">
+        <div className="flex justify-center h-50 items-center">
+      <div>
         <button onClick={()=>{
             setPrompt(true)
             setBtn(false)
-        }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1 bg-yellow-500 outline-none ">Submit</button>
-        {loadNext?<CircularProgress/>:""}
+        }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300  border-blue-600 border-1 bg-rose-500 outline-none "
+        style={{position:"absolute",bottom:"100px"}}>Submit</button>
+        </div>
+        {loadNext?<CircularProgress/>:
         <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
           test.questionNo===test.totalQuestions || loadNext || wrongAns ? true : false
-        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${(test.questionNo===test.totalQuestions || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>Next</button>
+        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/50   border-blue-600 border-1  ${(test.questionNo===test.totalQuestions || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>
+          Next</button>}
         </div>
       </Form>
     </Formik>
       </div>
       </div>
       {prompt && (
-       <Alert message={"Are you sure you want to submit the test"} successFunc={end_test} dismissFunc={dismiss_alert}/>         
+       <Alert message={"The Test Will End Once You Click Agree!!!"} successFunc={end_test} dismissFunc={dismiss_alert} status={0}/>         
+      )}
+      {successMsg && (
+       <Alert message={"You Got An Answer"} successFunc={()=>{}} dismissFunc={()=>{setSuccess(false)}} status={1}/>         
       )}
       </div>
     </div>
