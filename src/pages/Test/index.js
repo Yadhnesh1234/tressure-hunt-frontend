@@ -23,6 +23,7 @@ const Test = ()=>{
     const [loadNext,setLoadNext]=useState(false)
     const [wrongAns,setWrongAns]=useState(false)
     const [successMsg,setSuccess]=useState(false)
+    const [timer,setTimer]=useState(20)
     const test = useSelector((state)=>state.test)
     const verifyAnsStatus=useRef(test.ansVerifiedStatus)
     const dispatch = useDispatch()
@@ -31,7 +32,6 @@ const Test = ()=>{
     
     useEffect(()=>{
       setLoadNext(true)
-      console.log("Hello")
       Promise.resolve(dispatch(getAllQuestionCount()))
       Promise.resolve(dispatch(nextQuestion()))
       .then(()=>{
@@ -41,6 +41,7 @@ const Test = ()=>{
     },[dispatch])
 
     useEffect(()=>{
+      console.log(test.totalQuestions )
       verifyAnsStatus.current=test.ansVerifiedStatus;
     },[test])
 
@@ -63,13 +64,18 @@ const Test = ()=>{
         }else{
           setLoadNext(false)
           setWrongAns(true)
+          const wrongAnsInterval=setInterval(()=>{
+            setTimer((prev)=>prev-=1)
+          },1000)
           setTimeout(()=>{
             Promise.resolve(dispatch(nextQuestion()))
             .then(()=>{
              resetForm()
              setWrongAns(false)
+             clearInterval(wrongAnsInterval)
+             setTimer(20)
            })
-           },20000)
+           },19000)
         }
       })
       }else{
@@ -122,18 +128,17 @@ const Test = ()=>{
         <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="answer" component="div" className="error" />
         </div>
         <div className="flex justify-center h-50 items-center">
-      <div>
         <button onClick={()=>{
             setPrompt(true)
             setBtn(false)
         }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300  border-blue-600 border-1 bg-rose-500 outline-none "
         style={{position:"absolute",bottom:"100px"}}>Submit</button>
-        </div>
         {loadNext?<CircularProgress/>:
         <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
           test.questionNo===test.totalQuestions || loadNext || wrongAns ? true : false
         } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/50   border-blue-600 border-1  ${(test.questionNo===test.totalQuestions || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>
-          Next</button>}
+          Next</button>
+         }
         </div>
       </Form>
     </Formik>
@@ -145,11 +150,13 @@ const Test = ()=>{
       {successMsg && (
        <Alert message={"You Got An Answer"} successFunc={()=>{}} dismissFunc={()=>{setSuccess(false)}} status={1}/>         
       )}
+      {
+       wrongAns &&(
+        <Alert message={`Wrong Answer Wait For ${timer} Seconds`} successFunc={()=>{}} dismissFunc={()=>{}} status={2}/>         
+       )
+      }
       </div>
     </div>
-
-   
-
     </>
     )
 }

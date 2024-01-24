@@ -19,11 +19,17 @@ export const startTest=()=>{
 export const getAllQuestionCount=()=>{
     return async (dispatch)=>{
         try{
-           const res= await fetch(GET_ALL_QUESTION)
+           const res= await fetch(GET_ALL_QUESTION,{
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': "Bearer "+localStorage.getItem("token")
+            }
+         })
            const data = await res.json();
            console.log(data)
            dispatch({
-              type:"TOTAL_COUNT",
+               type:"TOTAL_COUNT",
                response:data.totalQuestionCount
            })
         }catch(error){
@@ -82,7 +88,6 @@ export const verifyAnswer=(answer,quesNo)=>{
                type:"VERIFY_ANS",
                response:false
             })
-            throw new Error("Wrong Answer !!! wait for 20 sec")
          } 
       }catch(error){
           alert(error.message)

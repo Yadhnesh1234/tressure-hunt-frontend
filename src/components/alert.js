@@ -17,7 +17,7 @@ function Alert({message,successFunc,dismissFunc,status}) {
 	  <h2 class="mt-2 font-semibold text-gray-800">{status===1?"Message":"Warning"}</h2>
 	  <p class="mt-2 text-sm text-gray-600 leading-relaxed">
    {message}</p></div>
-
+  {status===2?"":
 	<div class="flex items-center mt-3">
     {
     status===1?
@@ -34,6 +34,7 @@ function Alert({message,successFunc,dismissFunc,status}) {
     </>
     }
 	</div>
+   }
   </div>
 </div>
   )
