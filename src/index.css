@@ -6,6 +6,17 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
 
-.hero-heading{
+.hero-heading {
     font-family: 'Rowdies', sans-serif;
+}
+
+/* model css */
+.modal {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background: rgba(49, 49, 49, 0.19);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.7px);
+    -webkit-backdrop-filter: blur(5.7px);
 }
