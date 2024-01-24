@@ -21,6 +21,7 @@ const Test = ()=>{
     const [ans,setAns] = useState("")
     const [load,setLoad]=useState(true)
     const [loadNext,setLoadNext]=useState(false)
+    const [wrongAns,setWrongAns]=useState(false)
     const test = useSelector((state)=>state.test)
     const verifyAnsStatus=useRef(test.ansVerifiedStatus)
     const dispatch = useDispatch()
@@ -60,11 +61,13 @@ const Test = ()=>{
           alert("You Got The Answer!!!")
           nextQuestionApiCall(resetForm)
         }else{
+          setLoadNext(false)
+          setWrongAns(true)
           setTimeout(()=>{
             Promise.resolve(dispatch(nextQuestion()))
             .then(()=>{
              resetForm()
-             setLoadNext(false)
+             setWrongAns(false)
            })
            },20000)
         }
@@ -126,7 +129,7 @@ const Test = ()=>{
         {loadNext?<CircularProgress/>:""}
         <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
           test.questionNo===test.totalQuestions ? true : false
-        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${(test.questionNo===test.totalQuestions || loadNext)?"bg-gray-300":"bg-yellow-500"} outline-none `}>Next</button>
+        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/100 border-blue-600 border-1  ${(test.questionNo===test.totalQuestions || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>Next</button>
         </div>
       </Form>
     </Formik>
