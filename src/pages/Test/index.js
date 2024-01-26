@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import Alert from "../../components/alert"
 import Loader from "../../components/loader"
 import CircularProgress from '@mui/material/CircularProgress';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const validationSchema = Yup.object().shape({
     answer: Yup.string().required('Answer is required'),
@@ -135,8 +136,8 @@ const Test = ()=>{
         style={{position:"absolute",bottom:"100px"}}>Submit</button>
         {loadNext?<CircularProgress/>:
         <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
-          test.questionNo===test.totalQuestions || loadNext || wrongAns ? true : false
-        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/50   border-blue-600 border-1  ${(test.questionNo===test.totalQuestions || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>
+          test.questionNo===parseInt(test.totalQuestions) || loadNext || wrongAns ? true : false
+        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/50   border-blue-600 border-1  ${(test.questionNo===parseInt(test.totalQuestions) || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>
           Next</button>
          }
         </div>
@@ -148,7 +149,10 @@ const Test = ()=>{
        <Alert message={"The Test Will End Once You Click Agree!!!"} successFunc={end_test} dismissFunc={dismiss_alert} status={0}/>         
       )}
       {successMsg && (
-       <Alert message={"You Got An Answer"} successFunc={()=>{}} dismissFunc={()=>{setSuccess(false)}} status={1}/>         
+        <>
+       <Alert message={"You Got An Answer"} successFunc={()=>{}} dismissFunc={()=>{setSuccess(false)}} status={1}/>     
+       <ConfettiExplosion />   
+       </> 
       )}
       {
        wrongAns &&(

@@ -5,6 +5,7 @@ function Alert({message,successFunc,dismissFunc,status}) {
   const return_img_msg=()=>{
       if(status===0) return "./warning.png"
       else if(status===1) return "./success.png"
+      else if(status===2) return "./wrong_ans.png"
       else return "./correct_ans.png"
   }
   return (
