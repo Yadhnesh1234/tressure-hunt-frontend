@@ -1,36 +1,10 @@
 import Login from "../../components/login";
 import { useState } from "react";
 import HeroSection from "../../components/HeroSection";
-import Logo from "../../components/Logo";
-
-// Import Logo Images
 
 const Home = () => {
   const [displayLogin, setDisplayLogin] = useState(false);
-  const logoData = [
-    {
-      imgSrc: "Logo's/Ieee.png",
-      title: "IEEE",
-    },
-    {
-      imgSrc: "Logo's/IeeeFlag.png",
-      title: "IEEE Pune Section",
-    },
-    {
-      imgSrc: "Logo's/Itsa.png",
-      title: "ITSA",
-    },
-    {
-      imgSrc: "Logo's/Itsoc.png",
-      title: "ITSOC",
-    },
-    {
-      imgSrc: "Logo's/PccoeChapter.png",
-      title: "PCCOE Chapter",
-    },
-  ];
-
-  return (
+    return (
     <>
       <div
         style={{
@@ -54,7 +28,7 @@ const Home = () => {
               </button>
               {/* Logo's */}
 
-              <p
+              {/* <p
                 style={{
                   fontSize: "1.2rem",
                   width: "80vw",
@@ -70,8 +44,8 @@ const Home = () => {
                 Brought to you by the Information Technology Student Association
                 (ITSA), Codechef PCCOE Chapter, PCCOE IEEE Student Branch, PCCOE
                 ITSOC Chapter and IEEE Pune Section.
-              </p>
-              <div
+              </p> */}
+              {/* <div
                 style={{
                   marginTop: "1rem",
                   width: "100vw",
@@ -83,7 +57,7 @@ const Home = () => {
                 {logoData.map((logo) => {
                   return <Logo imgSrc={logo.imgSrc} title={logo.title} />;
                 })}
-              </div>
+              </div> */}
             </div>
           ) : (
             <Login />
