@@ -6,6 +6,7 @@ function Alert({message,successFunc,dismissFunc,status}) {
       if(status===0) return "./warning.png"
       else if(status===1) return "./success.png"
       else if(status===2) return "./wrong_ans.png"
+      else if(status===3) return "./treassure_unlock.gif"
       else return "./correct_ans.png"
   }
   return (
@@ -15,13 +16,13 @@ function Alert({message,successFunc,dismissFunc,status}) {
 	  <div class="flex justify-center items-center p-4 bg-yellow-50 rounded-full">
      <img src={return_img_msg()} alt="" style={{height:"30%",width:"30%"}}/>
 	  </div>
-	  <h2 class="mt-2 font-semibold text-gray-800">{status===1?"Message":"Warning"}</h2>
+	  <h2 class="mt-2 font-semibold text-gray-800">{status===1 || status===3?"Message":"Warning"}</h2>
 	  <p class="mt-2 text-sm text-gray-600 leading-relaxed">
    {message}</p></div>
-  {status===2?"":
+  {status===2 ?"":
 	<div class="flex items-center mt-3">
     {
-    status===1?
+    status===1 || status===3 ?
     <button onClick={()=>{dismissFunc()}} class="flex-1 px-4 py-2 ml-2 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium rounded-md">
       OK
     </button>:

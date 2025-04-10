@@ -1,6 +1,6 @@
 import {RESET_USER,ADMIN_LOGIN,GET_ALL_USERS,GET_RESULT} from '../api'
 
-export const login = (username,password) => {
+export const login = (user,pass) => {
   return async (dispatch) => {
     try {
       const res = await fetch(ADMIN_LOGIN, {
@@ -9,8 +9,8 @@ export const login = (username,password) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: username,
-          password:password
+          username:user,
+          password:pass
         }),
       });
       const data = await res.json();
@@ -26,8 +26,8 @@ export const login = (username,password) => {
       dispatch({
         type: "LOGIN",
         token: data.token,
-        username: username,
-        password: password,
+        username: user,
+        password: pass,
         verified:true
       });
     }

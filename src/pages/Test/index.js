@@ -24,6 +24,7 @@ const Test = ()=>{
     const [loadNext,setLoadNext]=useState(false)
     const [wrongAns,setWrongAns]=useState(false)
     const [successMsg,setSuccess]=useState(false)
+    const [disableNext,setDisableNext] = useState(false)
     const [timer,setTimer]=useState(20)
     const test = useSelector((state)=>state.test)
     const verifyAnsStatus=useRef(test.ansVerifiedStatus)
@@ -32,8 +33,8 @@ const Test = ()=>{
 
     
     useEffect(()=>{
-      setLoadNext(true)
       Promise.resolve(dispatch(getAllQuestionCount()))
+      setLoadNext(true)
       Promise.resolve(dispatch(nextQuestion()))
       .then(()=>{
          setLoad(false) 
@@ -59,7 +60,10 @@ const Test = ()=>{
         setLoadNext(true)
         Promise.resolve(dispatch(verifyAnswer(values.answer,test.questionNo)))
         .then(()=>{
-         if(verifyAnsStatus.current){
+         if(test.questionNo===parseInt(test.totalQuestions) && verifyAnsStatus.current){
+           setDisableNext(true)
+         }
+         else if(verifyAnsStatus.current){
           setSuccess(true)
           nextQuestionApiCall(resetForm)
         }else{
@@ -128,16 +132,17 @@ const Test = ()=>{
         <div className="h-7 p-1">
         <ErrorMessage style={{color:'#EB5286',marginTop:"4px"}} name="answer" component="div" className="error" />
         </div>
-        <div className="flex justify-center h-50 items-center">
+        <div className="flex flex-row justify-between h-50 items-center">
         <button onClick={()=>{
             setPrompt(true)
             setBtn(false)
-        }} className="cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300  border-blue-600 border-1 bg-rose-500 outline-none "
-        style={{position:"absolute",bottom:"100px"}}>Submit</button>
+        }} 
+        disabled={disableNext || loadNext || wrongAns ? true : false}
+        className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300  border-blue-600 border-1 ${(disableNext || loadNext || wrongAns)?"bg-gray-500":"bg-rose-500"} outline-none `}
+        >Submit</button>
         {loadNext?<CircularProgress/>:
-        <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={
-          test.questionNo===parseInt(test.totalQuestions) || loadNext || wrongAns ? true : false
-        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/50   border-blue-600 border-1  ${(test.questionNo===parseInt(test.totalQuestions) || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>
+        <button type="Submit" onClick={()=>{setBtn(true)}}  disabled={disableNext || loadNext || wrongAns ? true : false
+        } className={`cursor-pointer py-2 px-3 mt-4 rounded-xl w-20 focus:border-yellow-300 bg-slate-950/50   border-blue-600 border-1  ${(disableNext || loadNext || wrongAns)?"bg-gray-500":"bg-yellow-500"} outline-none `}>
           Next</button>
          }
         </div>
@@ -145,6 +150,12 @@ const Test = ()=>{
     </Formik>
       </div>
       </div>
+      {disableNext && (
+      <>
+       <Alert message={"You Got Your Tressure. click OK to redirect to login"} successFunc={()=>{}} dismissFunc={()=>{end_test()}} status={3}/>  
+       <ConfettiExplosion />    
+       </>    
+      )}
       {prompt && (
        <Alert message={"The Test Will End Once You Click Agree!!!"} successFunc={end_test} dismissFunc={dismiss_alert} status={0}/>         
       )}
