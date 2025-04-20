@@ -5,10 +5,7 @@ const initialState = {
     ansVerifiedStatus:false,
     totalQuestions:0
 }
-
-
-const testReducer = (state=initialState,action)=>{
- 
+const testReducer = (state=initialState,action)=>{ 
   switch(action.type){
      case "START_TEST" : 
         return{
@@ -44,5 +41,4 @@ const testReducer = (state=initialState,action)=>{
    }
 
 }
-
 export default testReducer
